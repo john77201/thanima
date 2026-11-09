@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: thanima-db-init
+  namespace: thanima
+spec:
+  template:
+    metadata:
+      name: thanima-db-init
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: db-init
+        image: image-registry.openshift-image-registry.svc:5000/openshift/mysql:8.0
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for MySQL service to become reachable..."
+          until mysqladmin ping -h thanima-mysql -u root -p$MYSQL_ROOT_PASSWORD --silent; do
+            sleep 2
+          done
+          echo "MySQL is UP. Importing schema..."
+          mysql -h thanima-mysql -u root -p$MYSQL_ROOT_PASSWORD < /scripts/schema.sql
+          echo "Importing seed data..."
+          mysql -h thanima-mysql -u thanima_user -p$MYSQL_PASSWORD thanima < /scripts/seed.sql
+          echo "Database initialization complete!"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: thanima-secrets
+              key: DB_ROOT_PASSWORD
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: thanima-secrets
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: sql-scripts
+          mountPath: /scripts
+      volumes:
+      - name: sql-scripts
+        configMap:
+          name: thanima-db-scripts

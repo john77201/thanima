@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: thanima-config
+  namespace: thanima
+data:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  APP_URL: "https://thanima-thanima.apps.openshift.example.com"
+  DB_HOST: "thanima-mysql"
+  DB_PORT: "3306"
+  DB_DATABASE: "thanima"
+  DB_USERNAME: "thanima_user"
+  SMTP_HOST: "smtp.sendgrid.net"
+  SMTP_PORT: "587"
+  SMTP_USER: "apikey"
+  MAIL_FROM_ADDRESS: "care@thanima.in"
+  MAIL_FROM_NAME: "Thanima Homely Foods"

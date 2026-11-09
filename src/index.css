@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --green-deep: #1F4D2B;
+  --green-emerald: #14381F;
+  --turmeric: #F2A900;
+  --turmeric-light: #FFD466;
+  --cream: #FFF8E7;
+  --cream-soft: #FFFDF7;
+  --terracotta: #B5502C;
+  --coconut-brown: #4A2C17;
+  --sand: #EFE8D8;
+  --font-malayalam: 'Noto Serif Malayalam', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--cream-soft);
+  color: var(--coconut-brown);
+  overflow-x: hidden;
+}
+
+.font-malayalam {
+  font-family: var(--font-malayalam);
+}
+
+.font-heading {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Kerala Kasavu gold border motif */
+.kasavu-border {
+  background-image: linear-gradient(90deg, #F2A900 0%, #D4AF37 25%, #FFF2A1 50%, #D4AF37 75%, #F2A900 100%);
+  height: 3px;
+}
+
+.kasavu-border-thin {
+  background-image: linear-gradient(90deg, #F2A900 0%, #D4AF37 50%, #F2A900 100%);
+  height: 1px;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F1EA;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8CFBE;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1F4D2B;
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}

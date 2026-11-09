@@ -1,0 +1,26 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: thanima-app
+  namespace: thanima
+  labels:
+    app: thanima-app
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: thanima-app
+  namespace: thanima
+  labels:
+    app: thanima-app
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: thanima-app:latest
+  source:
+    type: Binary
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanima-app
+  namespace: thanima
+  labels:
+    app: thanima-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thanima-app
+  template:
+    metadata:
+      labels:
+        app: thanima-app
+    spec:
+      containers:
+      - name: thanima-php
+        image: image-registry.openshift-image-registry.svc:5000/thanima/thanima-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        envFrom:
+        - configMapRef:
+            name: thanima-config
+        - secretRef:
+            name: thanima-secrets
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        readinessProbe:
+          httpGet:
+            path: /healthz.php
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz.php
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        volumeMounts:
+        - name: uploads-volume
+          mountPath: /var/www/html/public/assets/uploads
+      volumes:
+      - name: uploads-volume
+        persistentVolumeClaim:
+          claimName: thanima-uploads-pvc

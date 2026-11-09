@@ -1,0 +1,7 @@
+{
+  "name": "Thanima - Kerala Homely Foods",
+  "description": "Authentic Kerala homemade foods, traditional snacks, pickles, spice powders, and breakfast essentials delivered fresh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
