@@ -2,7 +2,6 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: thanima-app
-  namespace: thanima
   labels:
     app: thanima-app
 spec:
